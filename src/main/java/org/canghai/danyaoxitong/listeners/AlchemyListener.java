@@ -23,6 +23,8 @@ import org.canghai.danyaoxitong.AlchemyCraft;
 import org.canghai.danyaoxitong.items.herbs.HerbType;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -147,7 +149,7 @@ public class AlchemyListener implements Listener {
                         set.add(HerbType.getQuakityByLore(innerList.get(0)));
                     } else {
                         //  调试
-                        player.sendMessage("请输入正确配方！");
+                        player.sendMessage(Component.text("请输入正确配方！").color(NamedTextColor.AQUA));
                         return;
                     }
                 }
@@ -168,13 +170,13 @@ public class AlchemyListener implements Listener {
                                 item.setAmount(item.getAmount() - 1);
                             }
                         } else {
-                            player.sendMessage("配方无效！");
+                            player.sendMessage(Component.text("配方无效！").color(NamedTextColor.AQUA));
                         }
                     } else {
-                        player.sendMessage("请放入正确数量的物品！");
+                        player.sendMessage(Component.text("请放入正确数量的物品！").color(NamedTextColor.AQUA));
                     }
                 } else {
-                    player.sendMessage("请输入同品质药草！");
+                    player.sendMessage(Component.text("请输入同品质药草！").color(NamedTextColor.AQUA));
                 }
 
             }
@@ -182,7 +184,8 @@ public class AlchemyListener implements Listener {
         }
     }
 
-    //  处理容器关闭事件，清理物品
+    //  处理容器关闭事件，清理物品 todo
+    /*
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
         if (event.getView().getTitle().equals("炼丹炉")) {
@@ -217,5 +220,6 @@ public class AlchemyListener implements Listener {
             }
         }
     }
+     */
 
 }

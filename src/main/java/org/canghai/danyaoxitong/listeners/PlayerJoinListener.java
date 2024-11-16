@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.Map;
 
 public class PlayerJoinListener implements Listener {
@@ -20,6 +19,8 @@ public class PlayerJoinListener implements Listener {
 
         // 只对创造模式玩家进行操作
         if (player.getGameMode().toString().equals("CREATIVE")) {
+            int counter = 0;
+
             //  给予玩家炼丹炉（调试）
             ItemStack alchemyFurnace = new ItemStack(Material.FURNACE);
             ItemMeta meta = alchemyFurnace.getItemMeta();
@@ -30,10 +31,18 @@ public class PlayerJoinListener implements Listener {
             player.getInventory().addItem(alchemyFurnace);
 
             for (Map.Entry<String, HerbType> entry : HerbType.getLoadedHerbs().entrySet()) {
-                HerbType herb = entry.getValue();
-                ItemStack herbItem = new ItemStack(herb.getMaterial());
-                herbItem.getItemMeta().setDisplayName(herb.getDisplayName());
-                player.getInventory().addItem(herbItem);
+                if (counter < 5) {
+                    HerbType herb = entry.getValue();
+                    ItemStack herbItem = new ItemStack(herb.getMaterial());
+                    ItemMeta meta2 = herbItem.getItemMeta();
+                    meta.setDisplayName(herb.getDisplayName());
+                    herbItem.setItemMeta(meta2);
+                    player.getInventory().addItem(herbItem);
+
+                    counter++;
+                } else {
+                    break;
+                }
             }
             // 给玩家的创造模式库存添加丹药(要实现)
         }
