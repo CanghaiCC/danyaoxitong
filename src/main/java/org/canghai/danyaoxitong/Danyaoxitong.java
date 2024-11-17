@@ -1,6 +1,8 @@
 package org.canghai.danyaoxitong;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.canghai.danyaoxitong.commands.AlchemyCommand;
+import org.canghai.danyaoxitong.items.inventory.AlchemyInventory;
 import org.canghai.danyaoxitong.items.pills.PillType;
 import org.canghai.danyaoxitong.listeners.AlchemyListener;
 import org.canghai.danyaoxitong.listeners.HerbHarvestListener;
@@ -47,7 +49,11 @@ public final class Danyaoxitong extends JavaPlugin {
     //  注册事件方法
     private void registerEvents() {
         AlchemyCraft alchemyCraft = new AlchemyCraft();
+
         NamespacedKey alchemyFurnaceKey = new NamespacedKey(this, "alchemy_furnace");
+        NamespacedKey alchemyInventoryKey = new NamespacedKey(this, "alchemy_inventory");
+
+        AlchemyInventory alchemyInventory = new AlchemyInventory(this);
         AlchemyListener alchemyListener = new AlchemyListener(this ,alchemyCraft, alchemyFurnaceKey);
 
         getServer().getPluginManager().registerEvents(alchemyListener, this);

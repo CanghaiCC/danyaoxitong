@@ -30,7 +30,7 @@ public class AlchemyCraft {
 
             for (Map.Entry<String, PillType> entry : PillType.getLoadedPills().entrySet()) {
                 PillType pill = entry.getValue();
-                ItemStack pillItem = new ItemStack(pill.getMaterial());//  丹药材质待定
+                ItemStack pillItem = new ItemStack(Material.POTATO);//  丹药材质待定 todo
                 ItemMeta meta = pillItem.getItemMeta();
 
                 meta.setDisplayName(pill.getDisplayName());

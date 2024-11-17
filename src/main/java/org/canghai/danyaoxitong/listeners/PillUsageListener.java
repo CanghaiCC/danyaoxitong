@@ -1,5 +1,6 @@
 package org.canghai.danyaoxitong.listeners;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionEffectTypeCategory;
 import org.canghai.danyaoxitong.api.ValueChangeHandler;
 import org.canghai.danyaoxitong.items.pills.Pills;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 import java.time.Duration;
 import java.util.Objects;
@@ -24,15 +26,16 @@ public class PillUsageListener implements Listener {
         // 检查玩家使用的是否是自定义的丹药
         ItemStack pillItem = event.getItem();
         ItemMeta meta = pillItem.getItemMeta();
-        String name = meta.getDisplayName();
+        Component name = Component.text(meta.getDisplayName());
+        String painText = PlainTextComponentSerializer.plainText().serialize(name);
         Pills[] pills = Pills.values();
 
         for (Pills pill : pills) {
             if (name.equals(pill.getDisplayName())) {
                 // 根据丹药类型给予效果
-                player.sendMessage("你服用了" + name +"丹药，获得了特殊效果！");
+                player.sendMessage("你服用了" + painText +"丹药，获得了特殊效果！");
                 ValueChangeHandler handler = new ValueChangeHandler(event.getPlayer());
-                switch (name) {
+                switch (painText) {
                     case "回神丹":
                         // 恢复20%生命值
                         // TODO
@@ -50,15 +53,18 @@ public class PillUsageListener implements Listener {
                     case "夜明丹":
                         // 60s夜视
                         player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 60 * 20, 0));
+                        break;
 
                     case "抗素丹":
                         // 60s抗火、水下呼吸
                         player.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60 * 20 , 0));
                         player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 60 * 20, 0));
+                        break;
 
                     case "净心丹":
                         // 清除所有buff
                         player.clearActivePotionEffects();
+                        break;
 
                     case "隐修丹":
                         // 隐藏当前修为
@@ -68,47 +74,57 @@ public class PillUsageListener implements Listener {
                         // 回到上一次死亡地点
                         // TODO
 
+
                     case "藏体丹":
                         // 隐身60s
                         player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 60 * 20, 0));
+                        break;
 
                     case "安魂丹":
                         // 永久增加10生命值
                         // TODO
                         handler.addHealth(10);
+                        break;
 
                     case "气血丹":
                         // 永久增加1攻击力
                         // TODO
                         handler.addAttack(1);
+                        break;
 
                     case "壮阳丹":
                         // 永久增加1防御值
                         // TODO
                         handler.addDefense(1);
+                        break;
 
                     case "引灵丹":
                         // 武器所需灵力值减少1%
                         // TODO
 
+
                     case "还魂丹":
                         // 永久增加10生命值
                         // TODO
                         handler.addHealth(10);
+                        break;
 
                     case "骤气丹":
                         // 永久增加1攻击力
                         // TODO
                         handler.addAttack(1);
+                        break;
 
                     case "重阳丹":
                         // 永久增加1防御值
                         // TODO
                         handler.addDefense(1);
+                        break;
 
                     case "聚灵丹":
                         // 每分钟获得10灵力值
                         // TODO
+
                 }
             }
         }
